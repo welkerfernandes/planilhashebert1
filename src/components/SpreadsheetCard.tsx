@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, LucideIcon } from "lucide-react";
 
@@ -7,12 +13,19 @@ interface SpreadsheetCardProps {
   title: string;
   description: string;
   category: "fisica" | "empresario";
+  downloadUrl: string; // Adicionar a URL de download
 }
 
-export const SpreadsheetCard = ({ icon: Icon, title, description, category }: SpreadsheetCardProps) => {
+export const SpreadsheetCard = ({
+  icon: Icon,
+  title,
+  description,
+  category,
+  downloadUrl,
+}: SpreadsheetCardProps) => {
   const handleDownload = () => {
-    // Aqui você implementaria a lógica de download real
-    alert(`Download iniciado: ${title}`);
+    // Abrir o link de download em uma nova aba
+    window.open(downloadUrl, "_blank");
   };
 
   return (
@@ -25,8 +38,8 @@ export const SpreadsheetCard = ({ icon: Icon, title, description, category }: Sp
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
           onClick={handleDownload}
         >
