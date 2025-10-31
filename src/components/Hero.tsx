@@ -1,6 +1,8 @@
+// src/components/Hero.tsx
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/planilhas.png";
+import banner1 from "@/assets/banner1.jpg"; // Importação mantida
 
 export const Hero = () => {
   const scrollToSpreadsheets = () => {
@@ -9,12 +11,15 @@ export const Hero = () => {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const banner1Link = "https://pln.brtrk2.com/aff_c?offer_id=9055&aff_id=16469";
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-hero opacity-10" />
 
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      {/* Conteúdo Principal (Centralizado Verticalmente) */}
+      <div className="container mx-auto px-4 py-20 relative z-10 flex-1 flex items-center">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="animate-fade-in-up space-y-6">
@@ -76,6 +81,24 @@ export const Hero = () => {
             />
           </div>
         </div>
+      </div>
+
+      {/* Banner 1 Abaixo do Conteúdo Principal */}
+      <div className=" max-w-5xl mx-auto px-4 pb-10 relative z-10 flex justify-center">
+        <a
+          href={banner1Link}
+          target="_blank"
+          rel="noopener noreferrer"
+          // Adicionado: w-full max-w-2xl para definir largura e a animação
+          className="block w-full max-w-2xl rounded-lg overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-300 animate-floating-pulse"
+        >
+          <img
+            src={banner1}
+            // Removido width={500} e substituído por w-full para melhor responsividade
+            alt="Peça Já o seu Cartão Carrefour e Aproveite Todos os Benefícios"
+            className="w-full h-auto object-cover"
+          />
+        </a>
       </div>
     </section>
   );

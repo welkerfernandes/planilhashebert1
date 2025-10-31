@@ -1,6 +1,6 @@
+// src/pages/Index.tsx
 import { Hero } from "@/components/Hero";
 import { SpreadsheetsSection } from "@/components/SpreadsheetsSection";
-import { HowItWorks } from "@/components/HowItWorks";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 
