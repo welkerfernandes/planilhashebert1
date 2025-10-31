@@ -1,0 +1,33 @@
+# Certifique-se de que o módulo mod_headers está habilitado no Apache.
+# Para habilitá-lo, use: sudo a2enmod headers && sudo systemctl restart apache2
+<IfModule mod_headers.c>
+    # --- Configurações para o index.html (garante que sempre busque a versão mais recente) ---
+    # A maioria dos SPAs carrega o index.html primeiro. Não devemos cachear ele agressivamente.
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # --- Configurações para arquivos estáticos (JS, CSS, imagens, etc.) com cache de longa duração ---
+    # Estes arquivos geralmente têm hashes nos nomes (ex: main.a1b2c3d4.js)
+    # ou não mudam com frequência. Podemos cacheá-los por um longo tempo.
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        # O 'immutable' é útil para arquivos que não mudam (com hashes no nome)
+        # ele diz ao navegador para não revalidar o recurso.
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Exclui as requisições para o diretório de validação
+    RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+
+    # Redireciona todas as outras requisições para o index.html, permitindo que o React Router controle as rotas
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.html [QSA,L]
+</IfModule>
